@@ -1,7 +1,7 @@
 {
     "manifest_version": 1,
-    "id": "test",
-    "app_min_version": "3.7",
+    "id": "com.yourname.testplugin",
+    "app_min_version": "3.5",
     "version": "1.0.0",
     "name": "test",
     "description": "test",
