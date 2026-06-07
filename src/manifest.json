@@ -1,6 +1,6 @@
 {
   "manifest_version": 1,
-  "id": "test",
+  "id": "org.joplinapp.plugins.test",
   "app_min_version": "3.7",
   "version": "1.0.0",
   "name": "test",
