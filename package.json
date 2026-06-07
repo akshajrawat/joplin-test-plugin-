@@ -6,7 +6,7 @@
     "prepare": "npm run dist",
     "updateVersion": "webpack --env joplin-plugin-config=updateVersion",
     "update": "npm install -g generator-joplin && yo joplin --node-package-manager npm --update --force",
-    "publish": "npx ts-node ./script/publish/index.ts"
+    "publish": "ts-node ./script/publish/index.ts"
   },
   "license": "MIT",
   "keywords": [
@@ -19,7 +19,7 @@
     "@types/node": "^18.7.13",
     "chalk": "^4.1.0",
     "copy-webpack-plugin": "^11.0.0",
-    "enquirer": "^2.4.1",
+    "@inquirer/prompts": "^7.0.0",
     "fs-extra": "^10.1.0",
     "glob": "^8.0.3",
     "semver": "^7.5.4",
