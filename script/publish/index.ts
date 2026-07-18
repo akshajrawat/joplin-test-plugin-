@@ -1,9 +1,8 @@
-import authenticate from "./publish/steps/authenticate";
-import submitPayload from "./publish/steps/submitPayload";
-import verifyBuild from "./publish/steps/verifyBuild";
-import verifyGitState from "./publish/steps/verifyGitState";
-import logger from "./publish/utils/logger";
-
+import authenticate from './steps/authenticate';
+import submitPayload from './steps/submitPayload';
+import verifyBuild from './steps/verifyBuild';
+import verifyGitState from './steps/verifyGitState';
+import logger from './utils/logger';
 
 // Central command to run all the steps of the `npm run publish` flow
 async function publish() {
