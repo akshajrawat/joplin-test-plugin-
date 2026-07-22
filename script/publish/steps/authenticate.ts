@@ -5,9 +5,8 @@ import { promisify } from 'util';
 import { exec } from 'child_process';
 import logger from '../utils/logger';
 
-
 // replace with joplin's official o-auth client app id
-const githubClientId = 'Ov23li3KnDjw1qXitrlW';
+const githubClientId = 'client id to put';
 
 const execAsync = promisify(exec);
 
@@ -34,7 +33,6 @@ interface DeviceFlowResponse {
 const configDir = join(homedir(), '.config', 'joplin-plugin');
 const credentialPath = join(configDir, 'credentials.json');
 
-
 const authenticate = async () => {
 
 	// check if the user is authenticated by getting cache token
@@ -55,16 +53,16 @@ const authenticate = async () => {
   Waiting for authorization...
   `);
 
-	openBrowser(verification_uri);
+	await openBrowser(verification_uri);
 
 	// repeatedly checks if the user has authenticated or not
 	const accessToken = await pollForToken(device_code, interval, githubClientId);
 
-	saveToken(accessToken);
+	await saveToken(accessToken);
 	logger.success('Authenticated successfully!!');
 
 	return accessToken;
-}
+};
 
 // Opens browser for the given URL based on the OS the user is using
 const openBrowser = async (url: string) => {
@@ -75,16 +73,18 @@ const openBrowser = async (url: string) => {
 		cmd = `start "" "${url}"`;
 	} else if (platform === 'darwin') {
 		cmd = `open "${url}"`;
+	} else if (process.env.WSL_DISTRO_NAME || process.env.WSL_INTEROP) {
+		cmd = `wslview "${url}"`;
 	} else {
 		cmd = `xdg-open "${url}"`;
 	}
 
 	try {
 		await execAsync(cmd);
-	} catch (error) {
+	} catch {
 		logger.warn(`Could not open browser automatically. Please visit: ${url}`);
 	}
-}
+};
 
 const fileExists = async (path: string) => {
 	try {
@@ -113,7 +113,7 @@ const getCachedToken = async () => {
 		}
 	}
 	return null;
-}
+};
 
 const initiateDeviceFlow = async (clientId: string) => {
 	const response = await fetch('https://github.com/login/device/code', {
@@ -133,7 +133,7 @@ const initiateDeviceFlow = async (clientId: string) => {
 	}
 
 	return await response.json() as DeviceFlowResponse;
-}
+};
 
 // Checks if the user is authenticated or not every few seconds 
 // and returns the access_token if authenticated
@@ -192,12 +192,10 @@ const pollForToken = async (deviceCode: string, initialInterval: number, clientI
 			}
 		}
 	}
-}
+};
 
 const saveToken = async (token: string) => {
-
 	await mkdir(configDir, { recursive: true });
-	
 	// 8 hours expiry 
 	const expiresAt = new Date();
 	expiresAt.setHours(expiresAt.getHours() + 8);
@@ -211,6 +209,6 @@ const saveToken = async (token: string) => {
 		mode: 0o600,
 		encoding: 'utf8',
 	});
-}
+};
 
 export default authenticate;

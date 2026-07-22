@@ -11,7 +11,7 @@ export interface PluginMetadata {
 	repositoryUrl: string;
 }
 
-const registryRepo = 'akshajrawat/plugins-test';
+const registryRepo = 'joplin/plugins-test';
 
 // Creates an issue on the joplin/plugins repository for the plugin submission
 const submitPayload = async (metadata: PluginMetadata, commitHash: string, token: string) => {
@@ -51,6 +51,6 @@ const submitPayload = async (metadata: PluginMetadata, commitHash: string, token
 	logger.success('------ Submission Successful! ------');
 	logger.info(`Track your submission here:\n${issue.html_url}`);
 	logger.info('Your plugin will appear in the registry once a maintainer approves it.');
-}
+};
 
 export default submitPayload;
