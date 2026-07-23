@@ -1,3 +1,5 @@
+// cspell:ignore wslview
+
 import { readFile, access, mkdir, writeFile } from 'fs/promises';
 import { join } from 'path';
 import { homedir } from 'os';
@@ -6,7 +8,7 @@ import { exec } from 'child_process';
 import logger from '../utils/logger';
 
 // replace with joplin's official o-auth client app id
-const githubClientId = 'Ov23liFpwSKdj5seV5tw';
+const githubClientId = 'client id to put';
 
 const execAsync = promisify(exec);
 
@@ -135,7 +137,7 @@ const initiateDeviceFlow = async (clientId: string) => {
 	return await response.json() as DeviceFlowResponse;
 };
 
-// Checks if the user is authenticated or not every few seconds 
+// Checks if the user is authenticated or not every few seconds
 // and returns the access_token if authenticated
 const pollForToken = async (deviceCode: string, initialInterval: number, clientId: string) => {
 	let interval = initialInterval;
@@ -178,17 +180,17 @@ const pollForToken = async (deviceCode: string, initialInterval: number, clientI
 		// Continue the loop if authorization is pending or we hit rate limit
 		if (data.error) {
 			switch (data.error) {
-				case 'authorization_pending':
-					continue;
-				case 'slow_down':
-					interval += 5;
-					continue;
-				case 'expired_token':
-					throw new Error('\n Authentication timed out. Run the command again.');
-				case 'access_denied':
-					throw new Error('\n Authentication was denied.');
-				default:
-					throw new Error(`\n Authentication error: ${data.error_description || data.error}`);
+			case 'authorization_pending':
+				continue;
+			case 'slow_down':
+				interval += 5;
+				continue;
+			case 'expired_token':
+				throw new Error('\n Authentication timed out. Run the command again.');
+			case 'access_denied':
+				throw new Error('\n Authentication was denied.');
+			default:
+				throw new Error(`\n Authentication error: ${data.error_description || data.error}`);
 			}
 		}
 	}
@@ -196,7 +198,8 @@ const pollForToken = async (deviceCode: string, initialInterval: number, clientI
 
 const saveToken = async (token: string) => {
 	await mkdir(configDir, { recursive: true });
-	// 8 hours expiry 
+
+	// 8 hours expiry
 	const expiresAt = new Date();
 	expiresAt.setHours(expiresAt.getHours() + 8);
 
