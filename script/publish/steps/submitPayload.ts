@@ -1,4 +1,4 @@
-import authenticate, { clearCachedToken } from './authenticate';
+import { authenticate, clearCachedToken } from './authenticate';
 import logger from '../utils/logger';
 
 interface GitHubIssueResponse {

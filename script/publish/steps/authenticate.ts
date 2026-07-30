@@ -32,7 +32,7 @@ interface DeviceFlowResponse {
 const configDir = join(homedir(), '.config', 'joplin-plugin');
 const credentialPath = join(configDir, 'credentials.json');
 
-const authenticate = async () => {
+export const authenticate = async () => {
 
 	// check if the user is authenticated by getting cache token
 	const cachedToken = await getCachedToken();
@@ -199,5 +199,3 @@ export const clearCachedToken = async () => {
 		}
 	}
 };
-
-export default authenticate;
