@@ -1,3 +1,4 @@
+import authenticate, { clearCachedToken } from './authenticate';
 import logger from '../utils/logger';
 
 interface GitHubIssueResponse {
@@ -11,21 +12,10 @@ export interface PluginMetadata {
 	repositoryUrl: string;
 }
 
-const registryRepo = 'akshajrawat/plugins-test';
+const registryRepo = 'joplin/plugins-test';
 
-// Creates an issue on the joplin/plugins repository for the plugin submission
-const submitPayload = async (metadata: PluginMetadata, commitHash: string, token: string) => {
-	const issueTitle = `[Plugin Submission] ${metadata.name} v${metadata.version}`;
-	const payload = {
-		plugin_name: metadata.name,
-		repository_url: metadata.repositoryUrl,
-		commit_hash: commitHash,
-	};
-	const issueBody = `\`\`\`json\n${JSON.stringify(payload, null, 2)}\n\`\`\``;
-
-	logger.info('Submitting to Joplin registry...');
-
-	const response = await fetch(`https://api.github.com/repos/${registryRepo}/issues`, {
+const createSubmissionIssue = async (issueTitle: string, issueBody: string, token: string) => {
+	return await fetch(`https://api.github.com/repos/${registryRepo}/issues`, {
 		method: 'POST',
 		headers: {
 			'Authorization': `Bearer ${token}`,
@@ -37,6 +27,29 @@ const submitPayload = async (metadata: PluginMetadata, commitHash: string, token
 			body: issueBody,
 		}),
 	});
+};
+
+// Creates an issue on the joplin/plugins repository for the plugin submission
+const submitPayload = async (metadata: PluginMetadata, commitHash: string, token: string) => {
+	const issueTitle = `[Plugin Submission] ${metadata.name} v${metadata.version}`;
+	const payload = {
+		plugin_name: metadata.name,
+		version: metadata.version,
+		repository_url: metadata.repositoryUrl,
+		commit_hash: commitHash,
+	};
+	const issueBody = `\`\`\`json\n${JSON.stringify(payload, null, 2)}\n\`\`\``;
+
+	logger.info('Submitting to Joplin registry...');
+
+	let response = await createSubmissionIssue(issueTitle, issueBody, token);
+
+	if (response.status === 401) {
+		logger.warn('Cached GitHub credentials are no longer valid. Re-authenticating...');
+		await clearCachedToken();
+		const refreshedToken = await authenticate();
+		response = await createSubmissionIssue(issueTitle, issueBody, refreshedToken);
+	}
 
 	// If the issue is not created show the response message and status on terminal
 	if (response.status !== 201) {
