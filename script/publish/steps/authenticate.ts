@@ -1,15 +1,16 @@
-// cspell:ignore wslview
+// cspell:ignore rundll wslview
 
 import { readFile, mkdir, unlink, writeFile } from 'fs/promises';
 import { join } from 'path';
 import { homedir } from 'os';
 import { promisify } from 'util';
-import { exec } from 'child_process';
+import { execFile } from 'child_process';
 import logger from '../utils/logger';
 
 const githubClientId = 'Ov23liiKfv0K6bqN2BbP';
+const githubVerificationUrl = 'https://github.com/login/device';
 
-const execAsync = promisify(exec);
+const execFileAsync = promisify(execFile);
 
 interface Credentials {
 	token: string;
@@ -24,7 +25,6 @@ interface PollResponse {
 interface DeviceFlowResponse {
 	device_code: string;
 	user_code: string;
-	verification_uri: string;
 	interval: number;
 }
 
@@ -42,17 +42,17 @@ export const authenticate = async () => {
 	}
 
 	const deviceCodeResponse = await initiateDeviceFlow(githubClientId);
-	const { device_code, user_code, verification_uri, interval } = deviceCodeResponse;
+	const { device_code, user_code, interval } = deviceCodeResponse;
 
 	logger.info(`
   ------ GitHub Authentication Required ------
-  1. Your browser will open: ${verification_uri}
+  1. Your browser will open: ${githubVerificationUrl}
   2. Enter this code when prompted: ${user_code}
 
   Waiting for authorization...
   `);
 
-	await openBrowser(verification_uri);
+	await openBrowser();
 
 	// repeatedly checks if the user has authenticated or not
 	const accessToken = await pollForToken(device_code, interval, githubClientId);
@@ -64,24 +64,29 @@ export const authenticate = async () => {
 };
 
 // Opens browser for the given URL based on the OS the user is using
-const openBrowser = async (url: string) => {
+const openBrowser = async () => {
 	const platform = process.platform;
-	let cmd: string;
+	let command: string;
+	let args: string[];
 
 	if (platform === 'win32') {
-		cmd = `start "" "${url}"`;
+		command = 'rundll32.exe';
+		args = ['url.dll,FileProtocolHandler', githubVerificationUrl];
 	} else if (platform === 'darwin') {
-		cmd = `open "${url}"`;
+		command = 'open';
+		args = [githubVerificationUrl];
 	} else if (process.env.WSL_DISTRO_NAME || process.env.WSL_INTEROP) {
-		cmd = `wslview "${url}"`;
+		command = 'wslview';
+		args = [githubVerificationUrl];
 	} else {
-		cmd = `xdg-open "${url}"`;
+		command = 'xdg-open';
+		args = [githubVerificationUrl];
 	}
 
 	try {
-		await execAsync(cmd);
+		await execFileAsync(command, args);
 	} catch {
-		logger.warn(`Could not open browser automatically. Please visit: ${url}`);
+		logger.warn(`Could not open browser automatically. Please visit: ${githubVerificationUrl}`);
 	}
 };
 
