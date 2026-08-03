@@ -38,16 +38,16 @@ export const authenticate = async () => {
 		clientType: 'oauth-app',
 		clientId: githubClientId,
 		scopes: ['public_repo'],
-		onVerification: async ({ verification_uri: verificationUrl, user_code: userCode }: DeviceVerification) => {
+		onVerification: async ({ verification_uri, user_code }: DeviceVerification) => {
 			logger.info(`
   ------ GitHub Authentication Required ------
-  1. Your browser will open: ${verificationUrl}
-  2. Enter this code when prompted: ${userCode}
+  1. Your browser will open: ${verification_uri}
+  2. Enter this code when prompted: ${user_code}
 
   Waiting for authorization...
   `);
 
-			await openBrowser(verificationUrl);
+			await openBrowser(verification_uri);
 		},
 	});
 	const { token: accessToken } = await deviceAuth({ type: 'oauth' });
