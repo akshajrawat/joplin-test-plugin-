@@ -1,5 +1,5 @@
 {
-  "name": "joplin-plugin-testpackagelive",
+  "name": "joplin-plugin-test12345",
   "version": "1.0.0",
   "scripts": {
     "dist": "webpack --env joplin-plugin-config=buildMain && webpack --env joplin-plugin-config=buildExtraScripts && webpack --env joplin-plugin-config=createArchive",
@@ -16,6 +16,7 @@
     "publish"
   ],
   "devDependencies": {
+    "@octokit/auth-oauth-device": "^6.1.0",
     "@types/node": "^18.7.13",
     "chalk": "^4.1.0",
     "copy-webpack-plugin": "^11.0.0",
