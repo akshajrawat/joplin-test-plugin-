@@ -50,6 +50,7 @@ export const authenticate = async () => {
 			await openBrowser(verification_uri);
 		},
 	});
+
 	const { token: accessToken } = await deviceAuth({ type: 'oauth' });
 
 	await saveToken(accessToken);
