@@ -1,0 +1,16 @@
+{
+	"manifest_version": 1,
+	"id": "com.example.rulegroup3",
+	"app_min_version": "3.7",
+	"version": "1.0.0",
+	"name": "Rule Group 3",
+	"description": "CodeQL regression test plugin group 3",
+	"author": "Akshaj Rawat",
+	"homepage_url": "https://github.com/akshajrawat/joplin-test-plugin-",
+	"repository_url": "https://github.com/akshajrawat/joplin-test-plugin-",
+	"keywords": [],
+	"categories": [],
+	"screenshots": [],
+	"icons": {},
+	"promo_tile": {}
+}
