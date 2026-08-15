@@ -1,4 +1,4 @@
-{
+{ malformed manifest json
 	"manifest_version": 1,
 	"id": "com.test5.localAndScanRejections",
 	"app_min_version": "3.7",
