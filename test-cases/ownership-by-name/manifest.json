@@ -1,0 +1,16 @@
+{
+	"manifest_version": 1,
+	"id": "com.test4.submittedNameLookup",
+	"app_min_version": "3.7",
+	"version": "1.0.0",
+	"name": "Ownership By Name Submission Test",
+	"description": "Submission fixture whose package name matches an existing registry entry from another repository.",
+	"author": "tester",
+	"homepage_url": "https://github.com/akshajrawat/joplin-test-plugin-",
+	"repository_url": "https://github.com/akshajrawat/joplin-test-plugin-",
+	"keywords": [],
+	"categories": [],
+	"screenshots": [],
+	"icons": {},
+	"promo_tile": {}
+}
