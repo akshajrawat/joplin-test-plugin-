@@ -1,4 +1,4 @@
-{
+{ malformed package json
   "name": "joplin-plugin-local-and-scan-rejections-test",
   "version": "1.0.0",
   "scripts": {
