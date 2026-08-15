@@ -6,6 +6,7 @@
 	"name": "Local And Scan Rejections Test",
 	"description": "Plugin fixture for testing local validation and scan rejections.",
 	"author": "tester",
+	"_npm_package_name": "joplin-plugin-local-and-scan-rejections-test",
 	"homepage_url": "https://github.com/akshajrawat/joplin-test-plugin-",
 	"repository_url": "https://github.com/akshajrawat/joplin-test-plugin-",
 	"keywords": [],
