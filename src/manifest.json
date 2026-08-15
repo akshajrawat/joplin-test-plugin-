@@ -1,0 +1,16 @@
+{
+	"manifest_version": 1,
+	"id": "com.test5.localAndScanRejections",
+	"app_min_version": "3.7",
+	"version": "1.0.0",
+	"name": "Local And Scan Rejections Test",
+	"description": "Plugin fixture for testing local validation and scan rejections.",
+	"author": "tester",
+	"homepage_url": "https://github.com/akshajrawat/joplin-test-plugin-",
+	"repository_url": "https://github.com/akshajrawat/joplin-test-plugin-",
+	"keywords": [],
+	"categories": [],
+	"screenshots": [],
+	"icons": {},
+	"promo_tile": {}
+}
