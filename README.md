@@ -1,7 +1,7 @@
-# Joplin Plugin
+# Submit Flow Test
 
-This is your new Joplin plugin. It is suggested that you use this README file to document your plugin.
+A minimal Joplin plugin used to demonstrate the complete plugin submission flow.
 
-Exact-commit enforcement test fixture, commit B.
+After installation, click **Show Submit Flow Test** in the note toolbar. The plugin displays a confirmation dialog.
 
 For information on how to build or publish the plugin, please see [GENERATOR_DOC.md](./GENERATOR_DOC.md)

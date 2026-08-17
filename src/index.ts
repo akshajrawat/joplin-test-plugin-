@@ -1,8 +1,20 @@
 import joplin from 'api';
+import { ToolbarButtonLocation } from 'api/types';
 
 joplin.plugins.register({
 	onStart: async function() {
-		// eslint-disable-next-line no-console
-		console.info('Hello world. Test plugin started!');
+		await joplin.commands.register({
+			name: 'showSubmitFlowTest',
+			label: 'Show Submit Flow Test',
+			execute: async () => {
+				await joplin.views.dialogs.showMessageBox('Submit Flow Test plugin is working!');
+			},
+		});
+
+		await joplin.views.toolbarButtons.create(
+			'submitFlowTestButton',
+			'showSubmitFlowTest',
+			ToolbarButtonLocation.NoteToolbar,
+		);
 	},
 });
