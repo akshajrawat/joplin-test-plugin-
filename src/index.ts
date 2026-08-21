@@ -6,6 +6,10 @@ const reviewedCommandExample = () => {
 	execFile('node', ['--version']);
 };
 
+const newCommandExample = () => {
+	execFile('git', ['--version']);
+};
+
 joplin.plugins.register({
 	onStart: async function() {
 		await joplin.commands.register({
