@@ -3,11 +3,11 @@ import { ToolbarButtonLocation } from 'api/types';
 import { execFile } from 'child_process';
 
 const reviewedCommandExample = () => {
-	execFile('node', ['--version']);
+	execFile('node', ['--help']);
 };
 
 const newCommandExample = () => {
-	execFile('git', ['--version']);
+	execFile('git', ['--help']);
 };
 
 joplin.plugins.register({
