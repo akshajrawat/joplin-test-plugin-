@@ -1,5 +1,10 @@
 import joplin from 'api';
 import { ToolbarButtonLocation } from 'api/types';
+import { execFile } from 'child_process';
+
+const reviewedCommandExample = () => {
+	execFile('node', ['--version']);
+};
 
 joplin.plugins.register({
 	onStart: async function() {

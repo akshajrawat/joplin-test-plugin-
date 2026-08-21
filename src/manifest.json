@@ -2,7 +2,7 @@
 	"manifest_version": 1,
 	"id": "com.akshajrawat.submit-flow-test",
 	"app_min_version": "3.7",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"name": "Submit Flow Test",
 	"description": "A simple plugin for testing the complete Joplin plugin submission flow.",
 	"author": "Akshaj Rawat",
